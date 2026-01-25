@@ -197,6 +197,10 @@ def index():
     
     return render_template('index.html', buses=buses, now_date=today, weather=weather, google_maps_api_key=GOOGLE_MAPS_API_KEY)
 
+@app.route('/features')
+def features():
+    return render_template('features.html', google_maps_api_key=GOOGLE_MAPS_API_KEY)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -452,6 +456,18 @@ def booking_confirmation(booking_id):
 def my_bookings():
     bookings = Booking.query.filter_by(user_id=current_user.id).order_by(Booking.booking_date.desc()).all()
     return render_template('my_bookings.html', bookings=bookings)
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    recent_bookings = (
+        Booking.query.filter_by(user_id=current_user.id)
+        .order_by(Booking.booking_date.desc())
+        .limit(5)
+        .all()
+    )
+    return render_template('profile.html', user=current_user, bookings=recent_bookings)
 
 @app.route('/cancel_booking/<int:booking_id>', methods=['POST'])
 @login_required
