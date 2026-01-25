@@ -36,9 +36,9 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 # Google Maps API Key - Replace with your actual API key
-GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"
+GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', 'YOUR_GOOGLE_MAPS_API_KEY')
 # OpenWeatherMap API Key - Replace with your actual API key
-WEATHER_API_KEY = "YOUR_OPENWEATHER_API_KEY"
+WEATHER_API_KEY = os.getenv('WEATHER_API_KEY', 'YOUR_OPENWEATHER_API_KEY')
 
 # Database Models
 class User(UserMixin, db.Model):
