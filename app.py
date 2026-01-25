@@ -189,6 +189,7 @@ def init_sample_data():
 
 # Routes
 @app.route('/')
+def index():
     buses = Bus.query.all()
     today = date.today().strftime('%Y-%m-%d')
     
