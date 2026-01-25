@@ -118,11 +118,12 @@ def get_weather_data(city):
         print(f"Error fetching weather data: {e}")
     return None
 
-# Add this code after your app configuration but before your routes
-with app.app_context():
-    db.create_all()
-    
-    # Check if we need to add sample data
+# Database initialization is handled in wsgi.py
+# This prevents connection errors on import during deployment
+
+# Routes
+def init_sample_data():
+    """Initialize sample data if needed"""
     if not Bus.query.first():
         # Your sample data code here (buses, bus stops, etc.)
         sample_buses = [
@@ -188,7 +189,6 @@ with app.app_context():
 
 # Routes
 @app.route('/')
-def index():
     buses = Bus.query.all()
     today = date.today().strftime('%Y-%m-%d')
     
